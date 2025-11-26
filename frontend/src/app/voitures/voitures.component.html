@@ -1,0 +1,105 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Liste des Voitures</h2>
+
+  <!-- Toolbar -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="input-group w-50">
+      <span class="input-group-text">Filter by Client</span>
+      <select class="form-select" [(ngModel)]="selectedClientId" (change)="onClientChange()">
+        <option [ngValue]="null">All Clients</option>
+        @for (client of clients; track client.id) {
+          <option [ngValue]="client.id">{{ client.nom }}</option>
+        }
+      </select>
+    </div>
+    <button class="btn btn-primary" (click)="openAddForm()">
+      <i class="bi bi-plus-circle"></i> Add Car
+    </button>
+  </div>
+
+  <!-- Form Section (Visible when showForm is true) -->
+  @if (showForm) {
+    <div class="card mb-4">
+      <div class="card-header bg-info text-white">
+        {{ isEditing ? 'Edit Car' : 'Add New Car' }}
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="saveVoiture()">
+          <div class="row">
+             <!-- Marque -->
+             <div class="col-md-6 mb-3">
+               <label class="form-label">Marque</label>
+               <input type="text" class="form-control" [(ngModel)]="currentVoiture.marque" name="marque" required>
+             </div>
+             <!-- Model -->
+             <div class="col-md-6 mb-3">
+               <label class="form-label">Model</label>
+               <input type="text" class="form-control" [(ngModel)]="currentVoiture.model" name="model" required>
+             </div>
+             <!-- Matricule -->
+             <div class="col-md-6 mb-3">
+               <label class="form-label">Matricule</label>
+               <input type="text" class="form-control" [(ngModel)]="currentVoiture.matricule" name="matricule" required>
+             </div>
+             <!-- Client -->
+             <div class="col-md-6 mb-3">
+               <label class="form-label">Client</label>
+               <select class="form-select" [(ngModel)]="currentVoiture.id_client" name="id_client" required [disabled]="isEditing">
+                  @for (client of clients; track client.id) {
+                    <option [ngValue]="client.id">{{ client.nom }}</option>
+                  }
+               </select>
+               @if(isEditing) {
+                   <small class="text-muted">Client cannot be changed during edit.</small>
+               }
+             </div>
+          </div>
+          <div class="d-flex gap-2">
+             <button type="submit" class="btn btn-success">Save</button>
+             <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Table -->
+  <table class="table table-bordered table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Marque</th>
+        <th>Matricule</th>
+        <th>Model</th>
+        <th>Client</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (v of voitures; track v.id) {
+        <tr>
+          <td>{{ v.id }}</td>
+          <td>{{ v.marque }}</td>
+          <td>{{ v.matricule }}</td>
+          <td>{{ v.model }}</td>
+          <td>
+            @if (v.client) {
+              {{ v.client.nom }} (Age: {{ v.client.age }})
+            } @else {
+              <span class="text-muted">No Client</span>
+            }
+          </td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="openEditForm(v)">
+               <i class="bi bi-pencil"></i> Edit
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6" class="text-center">No voitures found.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

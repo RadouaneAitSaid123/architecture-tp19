@@ -1,6 +1,6 @@
 # Tp19 - Microservices Architecture
 
-This project is a microservices-based application developed using Spring Boot and Spring Cloud. It demonstrates a system for managing Clients and Cars (Voitures) with Service Discovery and an API Gateway.
+This project is a microservices-based application developed using Spring Boot and Spring Cloud. It demonstrates a system for managing Clients and Cars (Voitures) with Service Discovery and an API Gateway, accompanied by an Angular Frontend.
 
 ## Architecture Overview
 
@@ -10,6 +10,7 @@ The system consists of the following microservices:
 2.  **Gateway Service**: API Gateway that routes requests to the appropriate microservices.
 3.  **Client Service**: A service responsible for managing Client data.
 4.  **Voiture Service**: A service responsible for managing Car data and interacting with the Client Service.
+5.  **Frontend Application**: An Angular-based user interface for interacting with the system.
 
 ## Technologies Used
 
@@ -18,6 +19,8 @@ The system consists of the following microservices:
 *   **Spring Cloud** (Eureka, Gateway, OpenFeign)
 *   **H2 Database** (In-memory database)
 *   **Maven**
+*   **Angular**
+*   **Bootstrap**
 
 ## Service Details
 
@@ -27,6 +30,7 @@ The system consists of the following microservices:
 | `gateway-service` | API Gateway | **8888** | N/A |
 | `client-service` | Client Management Service | **8088** | H2 |
 | `voiture-service` | Car Management Service | **8089** | H2 |
+| `frontend` | Angular Frontend | **4200** | N/A |
 
 ## Getting Started
 
@@ -34,6 +38,8 @@ The system consists of the following microservices:
 
 *   Java Development Kit (JDK)
 *   Maven
+*   Node.js and npm
+*   Angular CLI
 
 ### Running the Services
 
@@ -63,6 +69,14 @@ It is recommended to start the services in the following order:
     cd voiture-service
     mvn spring-boot:run
     ```
+
+5.  **Frontend Application**:
+    ```bash
+    cd frontend
+    npm install
+    ng serve
+    ```
+    Access Application: `http://localhost:4200`
 
 ## API Endpoints
 
@@ -97,6 +111,9 @@ Since the services use H2 in-memory database, you can access the database consol
 *   **User:** `sa`
 *   **Password:** (Empty)
 
+## Demo
+
+[Watch the Demo Video](demo-front.mp4)
 
 ## Images
 
